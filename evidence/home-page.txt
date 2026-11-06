@@ -1,0 +1,46 @@
+================================================================================
+RELIEFGRID HOME PAGE DEPLOYMENT REPORT
+Org: prajwal@reliefgrid.dev (00Dg800000Qib6YEAR)
+Job ID: 0Afg800000Ktig1CAB
+Status: Succeeded (100% Deployed, 0 Errors)
+================================================================================
+
+Deploy Info
+┌──────────────────────────┬───────────────────────────┐
+│ Key                      │ Value                     │
+├──────────────────────────┼───────────────────────────┤
+│ checkOnly                │ false                     │
+│ completedDate            │ 2026-11-06T01:04:03.000Z  │
+│ createdBy                │ 005g800000E9dQH           │
+│ createdByName            │ Prajwal Padmanabha Pujari │
+│ createdDate              │ 2026-11-06T01:03:53.000Z  │
+│ done                     │ true                      │
+│ id                       │ 0Afg800000Ktig1CAB        │
+│ ignoreWarnings           │ false                     │
+│ lastModifiedDate         │ 2026-11-06T01:04:03.000Z  │
+│ numberComponentErrors    │ 0                         │
+│ numberComponentsDeployed │ 2                         │
+│ numberComponentsTotal    │ 2                         │
+│ numberFiles              │ 4                         │
+│ numberTestErrors         │ 0                         │
+│ numberTestsCompleted     │ 0                         │
+│ numberTestsTotal         │ 0                         │
+│ rollbackOnError          │ true                      │
+│ runTestsEnabled          │ false                     │
+│ startDate                │ 2026-11-06T01:04:02.000Z  │
+│ status                   │ Succeeded                 │
+│ success                  │ true                      │
+│ zipSize                  │ 2943                      │
+└──────────────────────────┴───────────────────────────┘
+
+Deployed Metadata Artifacts:
+1. FlexiPage: ReliefGrid_Home
+   - Template: home:desktopTemplate
+   - Type: HomePage
+   - Top Region: Custom LWC c:reliefMap
+   - BottomLeft Region: desktopDashboards:embeddedDashboard (ReliefGrid_Command_Center)
+   - Sidebar Region: flexipage:filterListCard (entityName: Incident__c, filterName: Critical_Open_Incidents)
+2. CustomApplication: Reliefgrid
+   - Tabs: standard-home (1st position), Relief_Center__c, Volunteer__c, Incident__c, Dispatch__c, Resource_Request__c, Relief_Map, standard-report, standard-Dashboard
+   - ActionOverride: Tab action for standard-home -> Flexipage ReliefGrid_Home (FormFactor: Large)
+================================================================================

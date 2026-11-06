@@ -266,3 +266,32 @@ If you have not already enabled email deliverability, check it once in the brows
 sf org open --path "/lightning/setup/OrgEmailSettings/home"
 ```
 Ensure **Access level** is set to **All email** so Flow email alerts are dispatched properly.
+
+---
+
+## 6. ReliefGrid Home Page (Live Map + Critical Open Incidents + Embedded Dashboard)
+
+A dedicated, comprehensive Home Page (`ReliefGrid_Home`) was created and wired into the `ReliefGrid` Lightning Application as its primary landing view (`standard-home` tab).
+
+### Layout Configuration
+- **Template:** `home:desktopTemplate` (Type: `HomePage`)
+- **Top Region:** `c:reliefMap` (Live Interactive Map displaying active incident and volunteer pins with refresh action)
+- **Sidebar Region:** `flexipage:filterListCard` (Displaying the `Critical_Open_Incidents` filtered list view on `Incident__c`)
+- **Bottom Left Region:** `desktopDashboards:embeddedDashboard` (Embedded `ReliefGrid Command Center` dashboard)
+- **App Navigation:** `standard-home` positioned as the 1st tab in `Reliefgrid.app-meta.xml` with `Tab` action override to `ReliefGrid_Home`.
+
+### Command to View the Home Page
+Run this command to open the Home page directly in your browser:
+```powershell
+sf org open --path "/lightning/page/home"
+```
+*(Ensure "ReliefGrid" is selected in the App Launcher if opening for the first time).*
+
+### Screenshot to Capture
+- **Home Page with Address Bar Visible:**
+  Capture the Home page showing:
+  1. The live Relief Map in the top region with active incident pin (`INC-0003`) and volunteer pins.
+  2. The Critical Open Incidents list card in the sidebar showing `INC-0003`.
+  3. The embedded Command Center dashboard below the map.
+  4. The browser address bar showing the org URL (`/lightning/page/home`).
+
