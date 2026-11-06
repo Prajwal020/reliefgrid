@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="ReliefGrid Live Map" icon-name="standard:location">
+        <lightning-button slot="actions" label="Refresh" onclick={handleRefresh}>
+        </lightning-button>
+        <template if:true={hasMarkers}>
+            <lightning-map map-markers={mapMarkers} zoom-level="11" list-view="visible">
+            </lightning-map>
+        </template>
+        <template if:false={hasMarkers}>
+            <p class="slds-p-around_medium">No active incidents or volunteers to show.</p>
+        </template>
+    </lightning-card>
+</template>
+

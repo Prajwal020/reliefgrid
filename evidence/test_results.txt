@@ -1,0 +1,68 @@
+=== Apex Code Coverage for Test Run 707g800000uERRa
+TEST NAME                                                                   CLASS BEING TESTED       OUTCOME  PERCENT  MESSAGE  RUNTIME (MS)
+──────────────────────────────────────────────────────────────────────────  ───────────────────────  ───────  ───────  ───────  ────────────
+DispatchServiceTest.bulkIncidentsNeverDoubleBookVolunteers                  DispatchService          Pass     82%               754         
+DispatchServiceTest.bulkIncidentsNeverDoubleBookVolunteers                  DispatchAssignmentJob    Pass     88%               754         
+DispatchServiceTest.bulkIncidentsNeverDoubleBookVolunteers                  IncidentTrigger          Pass     100%              754         
+DispatchServiceTest.bulkIncidentsNeverDoubleBookVolunteers                  IncidentTriggerHandler   Pass     87%               754         
+DispatchServiceTest.higherPriorityIncidentGetsTheOnlyVolunteer              IncidentTrigger          Pass     100%              191         
+DispatchServiceTest.higherPriorityIncidentGetsTheOnlyVolunteer              DispatchService          Pass     82%               191         
+DispatchServiceTest.higherPriorityIncidentGetsTheOnlyVolunteer              DispatchAssignmentJob    Pass     88%               191         
+DispatchServiceTest.higherPriorityIncidentGetsTheOnlyVolunteer              IncidentTriggerHandler   Pass     87%               191         
+DispatchServiceTest.nearestVolunteersAreFilteredAndOrdered                  IncidentTrigger          Pass     0%                87          
+DispatchServiceTest.nearestVolunteersAreFilteredAndOrdered                  IncidentTriggerHandler   Pass     13%               87          
+DispatchServiceTest.nearestVolunteersAreFilteredAndOrdered                  DispatchService          Pass     18%               87          
+DispatchServiceTest.nearestVolunteersAreFilteredAndOrdered                  DispatchAssignmentJob    Pass     25%               87          
+DispatchServiceTest.newIncidentDispatchesNearestVolunteersAndMarksThemBusy  IncidentTriggerHandler   Pass     87%               198         
+DispatchServiceTest.newIncidentDispatchesNearestVolunteersAndMarksThemBusy  IncidentTrigger          Pass     100%              198         
+DispatchServiceTest.newIncidentDispatchesNearestVolunteersAndMarksThemBusy  DispatchAssignmentJob    Pass     88%               198         
+DispatchServiceTest.newIncidentDispatchesNearestVolunteersAndMarksThemBusy  DispatchService          Pass     82%               198         
+DispatchServiceTest.resolvingIncidentReleasesVolunteers                     DispatchAssignmentJob    Pass     88%               211         
+DispatchServiceTest.resolvingIncidentReleasesVolunteers                     DispatchService          Pass     97%               211         
+DispatchServiceTest.resolvingIncidentReleasesVolunteers                     IncidentTriggerHandler   Pass     100%              211         
+DispatchServiceTest.resolvingIncidentReleasesVolunteers                     IncidentTrigger          Pass     100%              211         
+IncidentEscalationBatchTest.escalatesOnlyOverdueUnattendedIncidents         DispatchService          Pass     48%               667         
+IncidentEscalationBatchTest.escalatesOnlyOverdueUnattendedIncidents         IncidentTriggerHandler   Pass     87%               667         
+IncidentEscalationBatchTest.escalatesOnlyOverdueUnattendedIncidents         DispatchAssignmentJob    Pass     88%               667         
+IncidentEscalationBatchTest.escalatesOnlyOverdueUnattendedIncidents         IncidentTrigger          Pass     100%              667         
+IncidentEscalationBatchTest.escalatesOnlyOverdueUnattendedIncidents         IncidentEscalationBatch  Pass     86%               667         
+IncidentEscalationBatchTest.jobCanBeScheduledHourly                         DispatchService          Pass     5%                260         
+IncidentEscalationBatchTest.jobCanBeScheduledHourly                         IncidentTriggerHandler   Pass     13%               260         
+IncidentEscalationBatchTest.jobCanBeScheduledHourly                         IncidentEscalationBatch  Pass     71%               260         
+IncidentEscalationBatchTest.jobCanBeScheduledHourly                         DispatchAssignmentJob    Pass     25%               260         
+IncidentEscalationBatchTest.jobCanBeScheduledHourly                         IncidentTrigger          Pass     0%                260         
+MapMarkerControllerTest.returnsActiveIncidentsAndNonOfflineVolunteers       DispatchAssignmentJob    Pass     88%               337         
+MapMarkerControllerTest.returnsActiveIncidentsAndNonOfflineVolunteers       DispatchService          Pass     48%               337         
+MapMarkerControllerTest.returnsActiveIncidentsAndNonOfflineVolunteers       MapMarkerController      Pass     100%              337         
+MapMarkerControllerTest.returnsActiveIncidentsAndNonOfflineVolunteers       IncidentTrigger          Pass     75%               337         
+MapMarkerControllerTest.returnsActiveIncidentsAndNonOfflineVolunteers       IncidentTriggerHandler   Pass     53%               337         
+
+
+=== Apex Code Coverage by Class
+CLASSES                  PERCENT  UNCOVERED LINES
+───────────────────────  ───────  ───────────────
+DispatchService          97%      53,54          
+IncidentTriggerHandler   100%                    
+DispatchAssignmentJob    88%      22             
+MapMarkerController      100%                    
+IncidentEscalationBatch  100%                    
+IncidentTrigger          100%                    
+
+
+
+
+=== Test Summary
+NAME                 VALUE                 
+───────────────────  ──────────────────────
+Outcome              Passed                
+Tests Ran            8                     
+Pass Rate            100%                  
+Fail Rate            0%                    
+Skip Rate            0%                    
+Test Run Id          707g800000uERRa       
+Test Setup Time      0 ms                  
+Test Execution Time  2705 ms               
+Test Total Time      2705 ms               
+Org Id               00Dg800000Qib6YEAR    
+Username             prajwal@reliefgrid.dev
+Org Wide Coverage    97%                   

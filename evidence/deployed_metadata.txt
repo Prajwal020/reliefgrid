@@ -1,0 +1,118 @@
+================================================================================
+RELIEFGRID DEPLOYED METADATA MANIFEST
+Org: prajwal@reliefgrid.dev (00Dg800000Qib6YEAR)
+================================================================================
+
+1. CUSTOM OBJECTS (5)
+- Relief_Center__c (Relief Center)
+  * Location__c (Geolocation)
+  * Capacity__c (Number 6,0)
+  * Contact_Email__c (Email)
+  * Status__c (Picklist: Active [default], Inactive)
+  * Sharing Model: Read (Public Read Only)
+- Volunteer__c (Volunteer)
+  * Email__c (Email)
+  * Phone__c (Text 10)
+  * Skill__c (Picklist: Medical, Rescue, Logistics, Food Distribution, Communication)
+  * Status__c (Picklist: Available [default], Busy, Offline)
+  * Current_Location__c (Geolocation)
+  * Home_Center__c (Lookup -> Relief_Center__c)
+  * Sharing Model: ReadWrite (Public Read/Write)
+- Incident__c (Incident)
+  * Name (Auto Number: INC-{0000})
+  * Incident_Type__c (Picklist: Flood, Fire, Earthquake, Landslide, Road Accident, Medical Emergency)
+  * Severity__c (Picklist: Low, Medium, High, Critical)
+  * Status__c (Picklist: New [default], Assigned, In Progress, Resolved, Escalated)
+  * Location__c (Geolocation)
+  * Address__c (Text 120)
+  * People_Affected__c (Number 6,0)
+  * Required_Skill__c (Picklist: Medical, Rescue, Logistics, Food Distribution, Communication)
+  * Volunteers_Needed__c (Number 2,0, Default: 1)
+  * Reported_Date__c (DateTime, Default: NOW())
+  * Escalated__c (Checkbox, Default: false)
+  * Resolution_Notes__c (TextArea 255)
+  * Priority_Score__c (Formula Number: CASE(Severity__c, "Critical", 100, "High", 70, "Medium", 40, 10) + MIN(BLANKVALUE(People_Affected__c, 0), 50))
+  * Hours_Open__c (Formula Number 1 decimal: IF(ISPICKVAL(Status__c, "Resolved"), NULL, (NOW() - Reported_Date__c) * 24))
+  * Total_Dispatches__c (Roll-up Summary: COUNT Dispatches)
+  * Active_Dispatches__c (Roll-up Summary: COUNT Dispatches WHERE Status != Completed, Cancelled)
+  * Sharing Model: ReadWrite (Public Read/Write)
+- Dispatch__c (Dispatch)
+  * Name (Auto Number: DSP-{0000})
+  * Incident__c (Master-Detail -> Incident__c)
+  * Volunteer__c (Lookup -> Volunteer__c, Required)
+  * Status__c (Picklist: Assigned [default], En Route, On Site, Completed, Cancelled)
+  * Dispatched_At__c (DateTime, Default: NOW())
+  * Distance_KM__c (Number 6,2)
+  * Sharing Model: ControlledByParent
+- Resource_Request__c (Resource Request)
+  * Name (Auto Number: RR-{0000})
+  * Incident__c (Lookup -> Incident__c, Required)
+  * Relief_Center__c (Lookup -> Relief_Center__c)
+  * Resource_Type__c (Picklist: Food Packets, Drinking Water, Medical Kit, Blankets, Boats, Tents)
+  * Quantity__c (Number 6,0)
+  * Status__c (Picklist: Requested [default], Approved, Delivered, Rejected)
+  * Sharing Model: ReadWrite (Public Read/Write)
+
+2. VALIDATION RULES (6)
+- Incident__c.Volunteers_Needed_Range: OR(Volunteers_Needed__c < 1, Volunteers_Needed__c > 20)
+- Incident__c.People_Affected_Not_Negative: AND(NOT(ISBLANK(People_Affected__c)), People_Affected__c < 0)
+- Incident__c.Resolution_Notes_Required: AND(ISPICKVAL(Status__c, "Resolved"), ISBLANK(Resolution_Notes__c))
+- Volunteer__c.Phone_Format: AND(NOT(ISBLANK(Phone__c)), NOT(REGEX(Phone__c, "[0-9]{10}")))
+- Resource_Request__c.Quantity_Positive: Quantity__c <= 0
+- Dispatch__c.No_Offline_Volunteers: ISPICKVAL(Volunteer__r.Status__c, "Offline")
+
+3. LIST VIEWS
+- Incident__c.Critical_Open_Incidents: Severity = 'Critical' AND Status != 'Resolved'
+- Volunteer__c.Available_Volunteers: Status = 'Available'
+
+4. QUEUES (2)
+- Critical_Response_Queue (Supported Object: Incident__c)
+- General_Response_Queue (Supported Object: Incident__c)
+
+5. FLOWS (3 - All Status: Active)
+- Incident_Intake_Routing (Before-Save / Fast Field Update on Incident__c create)
+- Resource_Request_Approved (After-Save on Resource_Request__c update when Status = Approved)
+- Escalation_Alert (After-Save on Incident__c update when Escalated = true, recipient: 4mt23cs135@mite.ac.in)
+
+6. ROLES & PERMISSION SETS
+- Roles: Operations_Head > Regional_Coordinator > Field_Volunteer
+- Permission Sets:
+  * ReliefGrid_Coordinator: Full CRUD on all 5 custom objects, full FLS, access to ReliefGrid app and all custom tabs.
+  * ReliefGrid_Field_Volunteer: Read-only on Incident, Relief Center; Read/Create on Resource Request; Read/Edit on Volunteer (Status, Current_Location only); Read/Edit on Dispatch (Status only; Distance_KM read-only). Access to ReliefGrid app and tabs.
+- Test Users:
+  * Aisha Coordinator (Role: Regional_Coordinator, Profile: Standard User, Permset: ReliefGrid_Coordinator)
+  * Vikram Volunteer (Role: Field_Volunteer, Profile: Standard User, Permset: ReliefGrid_Field_Volunteer)
+
+7. APEX CLASSES & TRIGGERS
+- DispatchService.cls (97% coverage)
+- DispatchAssignmentJob.cls (88% coverage)
+- IncidentTriggerHandler.cls (100% coverage)
+- IncidentTrigger.trigger (100% coverage)
+- IncidentEscalationBatch.cls (100% coverage)
+- MapMarkerController.cls (100% coverage)
+- TestDataFactory.cls
+- DispatchServiceTest.cls
+- IncidentEscalationBatchTest.cls
+- MapMarkerControllerTest.cls
+
+8. SCHEDULED JOBS
+- ReliefGrid Escalation Hourly (CronExpression: '0 0 * * * ?', Schedulable class: IncidentEscalationBatch)
+
+9. LIGHTNING WEB COMPONENTS & APP PAGES
+- LWC: reliefMap (reliefMap.html, reliefMap.js, reliefMap.js-meta.xml)
+- Lightning App Page (FlexiPage): Relief_Map
+- Custom Tab: Relief_Map
+- Lightning App: Reliefgrid (Tabs: Incidents, Volunteers, Relief Centers, Dispatches, Resource Requests, Relief Map, Reports, Dashboards)
+
+10. REPORTS & DASHBOARDS
+- Report Type: Incidents_with_Dispatches__c
+- Report Folder: ReliefGrid_Reports
+- Reports:
+  1. Incidents_by_Severity_and_Status (Summary: Severity, Status)
+  2. Volunteer_Availability (Matrix: Skill, Status)
+  3. Dispatch_Performance (Grouped by Incident: Severity, Volunteer, Distance, Status)
+  4. Open_Resource_Requests (Grouped by Resource Type: Sum Quantity)
+  5. Unattended_Critical_Incidents (Filter: Severity=Critical, Status=New; Hours Open)
+- Dashboard Folder: ReliefGrid_Dashboards
+- Dashboard: ReliefGrid_Command_Center (Donut, Bar, Metric, Table, Bar)
+================================================================================

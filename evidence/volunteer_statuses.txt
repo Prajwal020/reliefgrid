@@ -1,0 +1,17 @@
+Querying Data... done
+┌────────────────────┬──────────────┬───────────────────┬───────────┬────────────┬─────────────────────────┬───────────────────────────────┬────────────────────────────────┐
+│ ID                 │ NAME         │ SKILL__C          │ STATUS__C │ PHONE__C   │ EMAIL__C                │ CURRENT_LOCATION__LATITUDE__S │ CURRENT_LOCATION__LONGITUDE__S │
+├────────────────────┼──────────────┼───────────────────┼───────────┼────────────┼─────────────────────────┼───────────────────────────────┼────────────────────────────────┤
+│ a05g800000EEPPtAAP │ Anita Rao    │ Medical           │ Available │ 9845000010 │ anitarao@example.com    │ 12.978                        │ 77.601                         │
+│ a05g800000EEPQ2AAP │ Arun Das     │ Rescue            │ Offline   │ 9845000019 │ arundas@example.com     │ 13.1986                       │ 77.7066                        │
+│ a05g800000EEPPxAAP │ Divya P      │ Logistics         │ Available │ 9845000014 │ divyap@example.com      │ 12.985                        │ 77.5533                        │
+│ a05g800000EEPPzAAP │ Farah Ali    │ Food Distribution │ Available │ 9845000016 │ farahali@example.com    │ 12.96                         │ 77.64                          │
+│ a05g800000EEPPwAAP │ Imran Khan   │ Rescue            │ Available │ 9845000013 │ imrankhan@example.com   │ 12.9141                       │ 77.6101                        │
+│ a05g800000EEPPuAAP │ Karthik S    │ Medical           │ Available │ 9845000011 │ karthiks@example.com    │ 13.035                        │ 77.597                         │
+│ a05g800000EEPPvAAP │ Meera Nair   │ Rescue            │ Available │ 9845000012 │ meeranair@example.com   │ 12.9352                       │ 77.6245                        │
+│ a05g800000EEPQ1AAP │ Neha Joshi   │ Medical           │ Busy      │ 9845000018 │ nehajoshi@example.com   │ 12.8456                       │ 77.6603                        │
+│ a05g800000EEPQ0AAP │ Rohit Gowda  │ Communication     │ Available │ 9845000017 │ rohitgowda@example.com  │ 12.9279                       │ 77.6271                        │
+│ a05g800000EEPPyAAP │ Suresh Kumar │ Logistics         │ Available │ 9845000015 │ sureshkumar@example.com │ 13.0827                       │ 77.5877                        │
+└────────────────────┴──────────────┴───────────────────┴───────────┴────────────┴─────────────────────────┴───────────────────────────────┴────────────────────────────────┘
+
+Total number of records retrieved: 10.

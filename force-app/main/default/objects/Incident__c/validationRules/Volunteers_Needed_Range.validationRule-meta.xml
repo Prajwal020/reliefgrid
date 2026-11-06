@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Volunteers_Needed_Range</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(Volunteers_Needed__c &lt; 1, Volunteers_Needed__c &gt; 20)</errorConditionFormula>
+    <errorDisplayField>Volunteers_Needed__c</errorDisplayField>
+    <errorMessage>Volunteers needed must be between 1 and 20.</errorMessage>
+</ValidationRule>
+

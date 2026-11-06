@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>People_Affected_Not_Negative</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISBLANK(People_Affected__c)), People_Affected__c &lt; 0)</errorConditionFormula>
+    <errorDisplayField>People_Affected__c</errorDisplayField>
+    <errorMessage>People affected cannot be negative.</errorMessage>
+</ValidationRule>
+

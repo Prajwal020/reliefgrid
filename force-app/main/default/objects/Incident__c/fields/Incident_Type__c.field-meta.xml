@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incident_Type__c</fullName>
+    <label>Incident Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Flood</fullName>
+                <default>false</default>
+                <label>Flood</label>
+            </value>
+            <value>
+                <fullName>Fire</fullName>
+                <default>false</default>
+                <label>Fire</label>
+            </value>
+            <value>
+                <fullName>Earthquake</fullName>
+                <default>false</default>
+                <label>Earthquake</label>
+            </value>
+            <value>
+                <fullName>Landslide</fullName>
+                <default>false</default>
+                <label>Landslide</label>
+            </value>
+            <value>
+                <fullName>Road Accident</fullName>
+                <default>false</default>
+                <label>Road Accident</label>
+            </value>
+            <value>
+                <fullName>Medical Emergency</fullName>
+                <default>false</default>
+                <label>Medical Emergency</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

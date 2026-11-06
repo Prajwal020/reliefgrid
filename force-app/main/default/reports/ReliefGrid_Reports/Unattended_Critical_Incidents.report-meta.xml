@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Incident_Type__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Severity__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Hours_Open__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Volunteers_Needed__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Reported_Date__c</field>
+    </columns>
+    <description>Unattended critical incidents requiring immediate response.</description>
+    <filter>
+        <criteriaItems>
+            <column>Incident__c.Severity__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Critical</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Incident__c.Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>New</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Unattended Critical Incidents</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Incident__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
+

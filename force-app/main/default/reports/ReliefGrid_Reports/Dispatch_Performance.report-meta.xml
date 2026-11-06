@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Incident__c.Dispatches__r$Name</field>
+    </columns>
+    <columns>
+        <field>Incident__c$Severity__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Dispatches__r$Volunteer__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Dispatches__r$Distance_km__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Dispatches__r$Status__c</field>
+    </columns>
+    <description>Dispatches grouped by Incident.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Incident__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Dispatch Performance</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Incidents_with_Dispatches__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Incident__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

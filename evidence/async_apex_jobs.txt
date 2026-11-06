@@ -1,0 +1,26 @@
+Querying Data... done
+┌────────────────────┬─────────────────┬─────────────────────────┬───────────┬───────────────────┬───────────────┬────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ ID                 │ JOBTYPE         │ APEXCLASS.NAME          │ STATUS    │ JOBITEMSPROCESSED │ TOTALJOBITEMS │ NUMBEROFERRORS │ CREATEDDATE                  │ COMPLETEDDATE                │
+├────────────────────┼─────────────────┼─────────────────────────┼───────────┼───────────────────┼───────────────┼────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ 707g800000uERRaAAO │ TestRequest     │ DispatchServiceTest     │ Completed │ 0                 │ 0             │ 0              │ 2026-11-06T00:00:28.000+0000 │ null                         │
+│ 707g800000uDSmjAAG │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T23:59:23.000+0000 │ null                         │
+│ 707g800000uDSmiAAG │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T23:59:23.000+0000 │ 2026-11-05T23:59:37.000+0000 │
+│ 707g800000uD0LWAA0 │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T23:14:05.000+0000 │ 2026-11-05T23:14:06.000+0000 │
+│ 707g800000uD0LXAA0 │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T23:14:05.000+0000 │ null                         │
+│ 707g800000uDFtsAAG │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T22:09:59.000+0000 │ null                         │
+│ 707g800000uDFtrAAG │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T22:09:59.000+0000 │ 2026-11-05T22:10:00.000+0000 │
+│ 707g800000uBM71AAG │ BatchApex       │ IncidentEscalationBatch │ Completed │ 1                 │ 1             │ 0              │ 2026-11-05T21:06:49.000+0000 │ 2026-11-05T21:06:50.000+0000 │
+│ 707g800000uBLUVAA4 │ BatchApexWorker │ IncidentEscalationBatch │ Completed │ 1                 │ 1             │ 0              │ 2026-11-05T21:06:49.000+0000 │ 2026-11-05T21:06:50.000+0000 │
+│ 707g800000uBM72AAG │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T21:06:49.000+0000 │ null                         │
+│ 707g800000uBll8AAC │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T20:10:00.000+0000 │ null                         │
+│ 707g800000uBll7AAC │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T20:10:00.000+0000 │ 2026-11-05T20:10:01.000+0000 │
+│ 707g800000uB0cOAAS │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T19:06:08.000+0000 │ null                         │
+│ 707g800000uB0cNAAS │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T19:06:08.000+0000 │ 2026-11-05T19:06:08.000+0000 │
+│ 707g800000u9SmgAAE │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T18:07:41.000+0000 │ 2026-11-05T18:07:42.000+0000 │
+│ 707g800000u9SmhAAE │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T18:07:41.000+0000 │ null                         │
+│ 707g800000u6gUiAAI │ Queueable       │ DispatchAssignmentJob   │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T17:23:08.000+0000 │ 2026-11-05T17:23:09.000+0000 │
+│ 707g800000u6gUhAAI │ Queueable       │ DispatchAssignmentJob   │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T17:23:08.000+0000 │ 2026-11-05T17:23:09.000+0000 │
+│ 707g800000u8YFtAAM │ BatchApex       │ IncidentEscalationBatch │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T17:05:42.000+0000 │ 2026-11-05T17:05:48.000+0000 │
+│ 707g800000u8YFuAAM │ ApexToken       │                         │ Completed │ 0                 │ 0             │ 0              │ 2026-11-05T17:05:42.000+0000 │ null                         │
+└────────────────────┴─────────────────┴─────────────────────────┴───────────┴───────────────────┴───────────────┴────────────────┴──────────────────────────────┴──────────────────────────────┘
+Total number of records retrieved: 20.

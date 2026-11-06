@@ -1,0 +1,151 @@
+================================================================================
+RELIEFGRID END-TO-END DEMO EXECUTION LOG (SECTION 13)
+Org: prajwal@reliefgrid.dev (00Dg800000Qib6YEAR)
+Date: 2026-11-06
+================================================================================
+
+--------------------------------------------------------------------------------
+STEP A: Create Critical Flood incident needing 2 Rescue volunteers
+Coordinates: (12.9250, 77.6200) - Riverside Colony
+--------------------------------------------------------------------------------
+Input Apex:
+Incident__c inc1 = new Incident__c(
+    Incident_Type__c = 'Flood',
+    Severity__c = 'Critical',
+    Required_Skill__c = 'Rescue',
+    Volunteers_Needed__c = 2,
+    People_Affected__c = 120,
+    Address__c = 'Riverside Colony',
+    Location__Latitude__s = 12.9250,
+    Location__Longitude__s = 77.6200
+);
+insert inc1;
+
+Execution Results & Verification:
+- Incident Created: Name = INC-0001, Id = a06g800000AqlMrAAJ
+- Flow 1 Triggered (Fast Field Update / Before-Save):
+  * Condition Met: Severity = Critical (Is Urgent: Urgent outcome)
+  * Owner Assigned: Critical Response Queue (Queue ID: 00Gg800000Bva6rEAB)
+- Trigger & Queueable Execution (IncidentTrigger -> DispatchAssignmentJob -> DispatchService):
+  * Nearest Rescue Volunteers Identified:
+    1. Meera Nair (Location: 12.9352, 77.6245) - Distance: 1.23 km
+    2. Imran Khan (Location: 12.9141, 77.6101) - Distance: 1.62 km
+    (Arun Das with skill Rescue was excluded because Status = 'Offline')
+  * 2 Dispatch Records Created:
+    - DSP-0001: Volunteer = Meera Nair, Distance = 1.23 km, Status = Assigned
+    - DSP-0002: Volunteer = Imran Khan, Distance = 1.62 km, Status = Assigned
+  * Volunteer Status Updated:
+    - Meera Nair: Status = Busy
+    - Imran Khan: Status = Busy
+  * Incident Status Updated:
+    - Status = Assigned
+    - Active_Dispatches__c = 2
+    - Total_Dispatches__c = 2
+
+--------------------------------------------------------------------------------
+STEP B: Create far-away High Medical incident
+Coordinates: (15.3000, 75.1000) - Remote Hill Station (>300 km from Bangalore)
+--------------------------------------------------------------------------------
+Input Apex:
+Incident__c inc2 = new Incident__c(
+    Incident_Type__c = 'Medical Emergency',
+    Severity__c = 'High',
+    Required_Skill__c = 'Medical',
+    Volunteers_Needed__c = 1,
+    People_Affected__c = 15,
+    Address__c = 'Remote Hill Station',
+    Location__Latitude__s = 15.3000,
+    Location__Longitude__s = 75.1000
+);
+insert inc2;
+
+Execution Results & Verification:
+- Incident Created: Name = INC-0002, Id = a06g800000AqlMsAAJ
+- Flow 1 Triggered: Owner assigned to Critical Response Queue (Severity = High)
+- Trigger & Queueable Execution:
+  * SOQL DISTANCE() query checked for volunteers within SEARCH_RADIUS_KM (50 km).
+  * 0 volunteers found within 50 km radius.
+  * Dispatches Created: 0
+  * Incident Status: Remained 'New'
+  * Active_Dispatches__c = 0
+  * Total_Dispatches__c = 0
+
+--------------------------------------------------------------------------------
+STEP C: Attempt to resolve incident 1 without notes
+--------------------------------------------------------------------------------
+Input Apex:
+inc1.Status__c = 'Resolved';
+update inc1;
+
+Execution Results & Verification:
+- Validation Rule Triggered: Incident__c.Resolution_Notes_Required
+- Error Message Caught:
+  "FIELD_CUSTOM_VALIDATION_EXCEPTION, Add resolution notes before resolving an incident.: [Resolution_Notes__c]"
+- Record update blocked as expected.
+
+--------------------------------------------------------------------------------
+STEP D: Resolve incident 1 with notes & verify volunteer release
+--------------------------------------------------------------------------------
+Input Apex:
+inc1.Status__c = 'Resolved';
+inc1.Resolution_Notes__c = 'Flooding subsided, all 120 residents safely evacuated to Central Relief Camp.';
+update inc1;
+
+Execution Results & Verification:
+- Update Succeeded.
+- IncidentTrigger afterUpdate fired:
+  * Detected status change to 'Resolved'.
+  * Invoked DispatchService.releaseVolunteers(new Set<Id>{ inc1.Id }).
+- Dispatches Updated:
+  * DSP-0001 (Meera Nair): Status changed from Assigned -> Completed
+  * DSP-0002 (Imran Khan): Status changed from Assigned -> Completed
+- Volunteers Released:
+  * Meera Nair: Status updated from Busy -> Available
+  * Imran Khan: Status updated from Busy -> Available
+- Roll-up Summary on INC-0001:
+  * Active_Dispatches__c = 0
+  * Total_Dispatches__c = 2
+
+--------------------------------------------------------------------------------
+STEP E: Backdate Incident 2 Reported Date & Run Hourly Escalation Batch
+--------------------------------------------------------------------------------
+Input Apex:
+inc2.Reported_Date__c = Datetime.now().addHours(-4);
+update inc2;
+Id batchJobId = Database.executeBatch(new IncidentEscalationBatch(), 200);
+
+Execution Results & Verification:
+- Batch Execution:
+  * ApexClass: IncidentEscalationBatch (Job ID: 707g800000uDSmiAAG)
+  * QueryLocator identified INC-0002 (Severity High, unassigned/New, Reported_Date > 3 hours ago).
+  * Execute block updated INC-0002: Status = 'Escalated', Escalated__c = true.
+- Flow 3 Triggered (Escalation_Alert):
+  * Trigger: Record-Triggered Flow on Incident update when Escalated__c = true.
+  * Action: Send Email to 4mt23cs135@mite.ac.in.
+  * Subject: "ESCALATED: INC-0002 (High) is unattended"
+  * Status confirmed in database: Status__c = 'Escalated', Escalated__c = true.
+
+--------------------------------------------------------------------------------
+STEP F: Create & Approve Resource Request for Incident
+--------------------------------------------------------------------------------
+Input Apex:
+Resource_Request__c rr = new Resource_Request__c(
+    Incident__c = inc2.Id,
+    Relief_Center__c = rc.Id, // Central Relief Camp
+    Resource_Type__c = 'Food Packets',
+    Quantity__c = 100,
+    Status__c = 'Requested'
+);
+insert rr;
+
+rr.Status__c = 'Approved';
+update rr;
+
+Execution Results & Verification:
+- Resource Request Created: RR-0001, Id = a08g800000eQ4TxAAK
+- Flow 2 Triggered (Resource_Request_Approved):
+  * Trigger: Record-Triggered Flow on Resource_Request__c update when Status__c = 'Approved' and Relief_Center__c is not null.
+  * Action: Send Email to Relief Center contact email (4mt23cs135@mite.ac.in).
+  * Subject: "Resource request approved: RR-0001"
+  * Body: "100 x Food Packets approved for incident INC-0002. Please prepare dispatch."
+================================================================================

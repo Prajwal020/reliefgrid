@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Incident_Type__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Required_Skill__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Volunteers_Needed__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Active_Dispatches__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Priority_Score__c</field>
+    </columns>
+    <columns>
+        <field>Incident__c.Hours_Open__c</field>
+    </columns>
+    <description>Summary of incidents grouped by severity and status.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Incident__c.Severity__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Incident__c.Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Incidents by Severity and Status</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Incident__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
+
