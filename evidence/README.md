@@ -5,7 +5,8 @@
 **Org ID:** `00Dg800000Qib6YEAR`  
 **Instance URL:** `https://orgfarm-a68b986535-dev-ed.develop.my.salesforce.com`  
 **API Version:** `62.0`  
-**Status:** 100% Complete & Verified  
+**Status:** 100% Complete, Deployed & Verified  
+**GitHub Repository:** [https://github.com/Prajwal020/reliefgrid.git](https://github.com/Prajwal020/reliefgrid.git)  
 
 ---
 
@@ -22,13 +23,14 @@
 | **Phase 6** | Hourly Escalation Scheduling | **PASSED** | Scheduled `ReliefGrid Escalation Hourly` (`0 0 * * * ?`). Verified via `CronTrigger`: State `WAITING`. |
 | **Phase 7** | Test User Provisioning & Sharing | **PASSED** | Created `Aisha Coordinator` (`aisha.coordinator.00dg8@reliefgrid.dev`) with `Regional_Coordinator` role & coordinator permset; Created `Vikram Volunteer` (`vikram.volunteer.00dg8@reliefgrid.dev`) with `Field_Volunteer` role & field volunteer permset. |
 | **Phase 8** | Custom Report Types, Reports & Dashboard | **PASSED** | Deployed Custom Report Type `Incidents_with_Dispatches`, folder `ReliefGrid_Reports`, all 5 Reports, and Lightning Dashboard `ReliefGrid_Command_Center` in `ReliefGrid_Dashboards`. |
+| **Home Page** | ReliefGrid Home FlexiPage | **PASSED** | Created `ReliefGrid_Home` (Type: `HomePage`, template: `home:desktopTemplate`) with live `reliefMap` LWC, `Critical_Open_Incidents` sidebar card, and embedded `ReliefGrid_Command_Center` dashboard. Set as primary landing tab in `Reliefgrid` app. |
 
 ---
 
 ## 2. Apex Test Execution & Code Coverage Report
 
 Test Command Executed:
-```bash
+```powershell
 sf apex run test --class-names DispatchServiceTest IncidentEscalationBatchTest MapMarkerControllerTest --code-coverage --detailed-coverage --result-format human --wait 15
 ```
 
@@ -52,7 +54,7 @@ sf apex run test --class-names DispatchServiceTest IncidentEscalationBatchTest M
 
 ### Individual Test Method Results
 
-| Test Class | Test Method Name | Execution Time | Outcome | What It Proves |
+| Test Class | Test Method Name | Execution Time | Outcome | What It Proves (Use in Report Section 7) |
 |---|---|---|---|---|
 | `DispatchServiceTest` | `nearestVolunteersAreFilteredAndOrdered` | 87 ms | **Pass** | SOQL `DISTANCE()` filters by status (`Available`), skill (`Medical`), radius (< 50 km), and sorts closest first. |
 | `DispatchServiceTest` | `newIncidentDispatchesNearestVolunteersAndMarksThemBusy` | 198 ms | **Pass** | End-to-end trigger + Queueable job creates Dispatch records with calculated distance in km and sets volunteer status to `Busy`. |
@@ -78,220 +80,105 @@ sf apex run test --class-names DispatchServiceTest IncidentEscalationBatchTest M
 
 ---
 
-## 4. Section 15.2 Screenshot Checklist & One-Click CLI Commands
+## 4. Master Screenshot Guide for Final Project Report
 
-Use these exact CLI commands in your terminal to open each required page directly in your browser:
+> [!IMPORTANT]
+> **Guidelines for Report Screenshots (from PDF Section 15):**
+> 1. Always keep the **browser address bar visible** showing the URL with your org domain (`orgfarm-a68b986535-dev-ed.develop.my.salesforce.com`).
+> 2. Ensure each screenshot is clean, high resolution, and accompanied by the exact 2-line caption provided below.
 
-### Section 1: Application Home
-- **#1: Org home page showing the ReliefGrid app**
-  ```powershell
-  sf org open --path "/lightning/app/c__Reliefgrid"
-  ```
+### Screenshot Master Table
 
-### Section 2: Data Model & Relationships
-- **#2: Fields list for each of the five objects**
-  ```powershell
-  # Incident__c
-  sf org open --path "/lightning/setup/ObjectManager/Incident__c/FieldsAndRelationships/view"
-
-  # Volunteer__c
-  sf org open --path "/lightning/setup/ObjectManager/Volunteer__c/FieldsAndRelationships/view"
-
-  # Relief_Center__c
-  sf org open --path "/lightning/setup/ObjectManager/Relief_Center__c/FieldsAndRelationships/view"
-
-  # Dispatch__c
-  sf org open --path "/lightning/setup/ObjectManager/Dispatch__c/FieldsAndRelationships/view"
-
-  # Resource_Request__c
-  sf org open --path "/lightning/setup/ObjectManager/Resource_Request__c/FieldsAndRelationships/view"
-  ```
-- **#3: Schema Builder showing relationships**
-  ```powershell
-  sf org open --path "/lightning/setup/SchemaBuilder/page?address=%2Fschemadesigner%2Fschemadesigner.apexp"
-  ```
-
-### Section 4: Sample Data & Locations
-- **#4: Volunteers list view and a record with its location**
-  ```powershell
-  # Available Volunteers list view
-  sf org open --path "/lightning/o/Volunteer__c/list?filterName=Available_Volunteers"
-
-  # Volunteer record detail (Meera Nair) showing Current Location geolocation
-  sf org open --path "/lightning/r/Volunteer__c/a05g800000EEPPvAAP/view"
-  ```
-
-### Section 5: Validation Rules
-- **#5: Each validation rule, plus one error on screen**
-  ```powershell
-  # Incident Validation Rules list
-  sf org open --path "/lightning/setup/ObjectManager/Incident__c/ValidationRules/view"
-
-  # Volunteer Validation Rules list
-  sf org open --path "/lightning/setup/ObjectManager/Volunteer__c/ValidationRules/view"
-
-  # Resource Request Validation Rules list
-  sf org open --path "/lightning/setup/ObjectManager/Resource_Request__c/ValidationRules/view"
-
-  # Dispatch Validation Rules list
-  sf org open --path "/lightning/setup/ObjectManager/Dispatch__c/ValidationRules/view"
-
-  # Error on screen: open INC-0002, edit Status to 'Resolved' without notes, click Save
-  sf org open --path "/lightning/r/Incident__c/a06g800000AqlMsAAJ/view"
-  ```
-
-### Section 6: Queues & Flows
-- **#6: Both queues and each of the three Flow canvases**
-  ```powershell
-  # Queues Setup list
-  sf org open --path "/lightning/setup/Queues/home"
-
-  # Flow 1: Incident Intake Routing canvas
-  sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1ztAAB"
-
-  # Flow 2: Resource Request Approved canvas
-  sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1zvAAB"
-
-  # Flow 3: Escalation Alert canvas
-  sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1zuAAB"
-  ```
-- **#7: Incident with the queue as Owner**
-  ```powershell
-  # Incident INC-0002 showing Owner = Critical Response Queue
-  sf org open --path "/lightning/r/Incident__c/a06g800000AqlMsAAJ/view"
-  ```
-
-### Section 7: Roles, Permissions & Security
-- **#8: Role hierarchy**
-  ```powershell
-  sf org open --path "/lightning/setup/Roles/home"
-  ```
-- **#9: Both permission sets and the Field Volunteer field permissions**
-  ```powershell
-  # Permission Sets home list
-  sf org open --path "/lightning/setup/PermSets/home"
-
-  # ReliefGrid Coordinator Permission Set
-  sf org open --path "/lightning/setup/PermSets/page?address=%2F0PSg800000Gcvwv"
-
-  # ReliefGrid Field Volunteer Permission Set (inspect Object & Field Permissions)
-  sf org open --path "/lightning/setup/PermSets/page?address=%2F0PSg800000Gcvww"
-  ```
-- **#10: Vikram's view with read-only fields**
-  ```powershell
-  # Open Users list to click "Login" next to Vikram Volunteer
-  sf org open --path "/lightning/setup/ManageUsers/home"
-  ```
-
-### Section 8: Reports & Dashboard
-- **#11: All five reports**
-  ```powershell
-  # Report 1: Incidents by Severity and Status
-  sf org open --path "/lightning/r/Report/00Og800000A43HiEAJ/view"
-
-  # Report 2: Volunteer Availability
-  sf org open --path "/lightning/r/Report/00Og800000A43HlEAJ/view"
-
-  # Report 3: Dispatch Performance
-  sf org open --path "/lightning/r/Report/00Og800000A43HhEAJ/view"
-
-  # Report 4: Open Resource Requests
-  sf org open --path "/lightning/r/Report/00Og800000A43HjEAJ/view"
-
-  # Report 5: Unattended Critical Incidents
-  sf org open --path "/lightning/r/Report/00Og800000A43HkEAJ/view"
-  ```
-- **#12: The Command Center dashboard**
-  ```powershell
-  # ReliefGrid Command Center Dashboard
-  sf org open --path "/lightning/r/Dashboard/01Zg8000004mUHdEAM/view"
-  ```
-
-### Section 9: Apex & Asynchronous Processing
-- **#13: Each Apex class and the trigger in the Developer Console**
-  ```powershell
-  # Open Developer Console
-  sf org open --path "/_ui/common/apex/debug/ApexCSIPage"
-
-  # Apex Classes Setup list
-  sf org open --path "/lightning/setup/ApexClasses/home"
-
-  # Apex Triggers Setup list
-  sf org open --path "/lightning/setup/ApexTriggers/home"
-  ```
-- **#14: Apex Jobs page and the incident's Dispatches with distances**
-  ```powershell
-  # Apex Jobs Setup list (showing completed Queueable and Batch jobs)
-  sf org open --path "/lightning/setup/AsyncApexJobs/home"
-
-  # INC-0001 Dispatches Related List showing DSP-0001 and DSP-0002 with distances in km
-  sf org open --path "/lightning/r/Incident__c/a06g800000AqlMrAAJ/related/Dispatches__r/view"
-  ```
-- **#15: Scheduled Jobs page**
-  ```powershell
-  # Scheduled Jobs setup list showing 'ReliefGrid Escalation Hourly'
-  sf org open --path "/lightning/setup/CronTrigger/home"
-  ```
-
-### Section 11: Live Relief Map LWC
-- **#16: Live map with pins**
-  ```powershell
-  # Relief Map custom tab showing active incidents and volunteer locations
-  sf org open --path "/lightning/n/Relief_Map"
-  ```
-
-### Section 12: Apex Test Execution & Coverage
-- **#17: Test run with every method passing**
-  ```powershell
-  # Apex Test Execution History
-  sf org open --path "/lightning/setup/ApexTestQueue/home"
-  ```
-- **#18: Overall and per-class code coverage**
-  ```powershell
-  # Apex Classes list with Percent Covered column
-  sf org open --path "/lightning/setup/ApexClasses/home"
-  ```
-- **#19: Highlighted covered lines in one class**
-  ```powershell
-  # Open Developer Console -> Tests panel -> Double-click DispatchService -> Highlight
-  sf org open --path "/_ui/common/apex/debug/ApexCSIPage"
-  ```
+| # | Spec Section | Target Screen | Purpose / Caption | One-Click CLI Launch Command |
+|---|---|---|---|---|
+| **1** | Sec 1 | App Launcher / Home | ReliefGrid Lightning App home view showing navigation tabs. | `sf org open --path "/lightning/app/c__Reliefgrid"` |
+| **2a** | Sec 2 | Incident Fields | Custom fields, formulas (`Priority_Score__c`, `Hours_Open__c`) and roll-ups on `Incident__c`. | `sf org open --path "/lightning/setup/ObjectManager/Incident__c/FieldsAndRelationships/view"` |
+| **2b** | Sec 2 | Volunteer Fields | Geolocation and picklist fields on `Volunteer__c`. | `sf org open --path "/lightning/setup/ObjectManager/Volunteer__c/FieldsAndRelationships/view"` |
+| **2c** | Sec 2 | Relief Center Fields | Geolocation, capacity, and contact email on `Relief_Center__c`. | `sf org open --path "/lightning/setup/ObjectManager/Relief_Center__c/FieldsAndRelationships/view"` |
+| **2d** | Sec 2 | Dispatch Fields | Master-Detail relationship to Incident and distance fields on `Dispatch__c`. | `sf org open --path "/lightning/setup/ObjectManager/Dispatch__c/FieldsAndRelationships/view"` |
+| **2e** | Sec 2 | Resource Request Fields | Quantity and status tracking on `Resource_Request__c`. | `sf org open --path "/lightning/setup/ObjectManager/Resource_Request__c/FieldsAndRelationships/view"` |
+| **3** | Sec 2 | Schema Builder | Visual entity-relationship diagram with all 5 ReliefGrid objects. | `sf org open --path "/lightning/setup/SchemaBuilder/page?address=%2Fschemadesigner%2Fschemadesigner.apexp"` |
+| **4a** | Sec 4 | Available Volunteers List | Filtered list view showing available field volunteers. | `sf org open --path "/lightning/o/Volunteer__c/list?filterName=Available_Volunteers"` |
+| **4b** | Sec 4 | Volunteer Detail Record | Volunteer detail page (Meera Nair) showing Geolocation coordinates. | `sf org open --path "/lightning/r/Volunteer__c/a05g800000EEPPvAAP/view"` |
+| **5a** | Sec 5 | Validation Rules List | Active validation rules across ReliefGrid objects. | `sf org open --path "/lightning/setup/ObjectManager/Incident__c/ValidationRules/view"` |
+| **5b** | Sec 5 | Validation Error on Screen | Screen error when attempting to resolve incident without notes. | `sf org open --path "/lightning/r/Incident__c/a06g800000AqlMsAAJ/view"` |
+| **6a** | Sec 6 | Queues List | Critical Response Queue and General Response Queue configuration. | `sf org open --path "/lightning/setup/Queues/home"` |
+| **6b** | Sec 6 | Flow 1 Canvas | `Incident_Intake_Routing` before-save Fast Field Update flow. | `sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1ztAAB"` |
+| **6c** | Sec 6 | Flow 2 Canvas | `Resource_Request_Approved` record-triggered email alert flow. | `sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1zvAAB"` |
+| **6d** | Sec 6 | Flow 3 Canvas | `Escalation_Alert` record-triggered escalation email alert flow. | `sf org open --path "/builder_platform_interaction/flowBuilder.app?flowId=301g800001Ap1zuAAB"` |
+| **7** | Sec 6 | Queue Ownership | Incident detail page showing Owner as `Critical Response Queue`. | `sf org open --path "/lightning/r/Incident__c/a06g800000AqlMsAAJ/view"` |
+| **8** | Sec 7 | Role Hierarchy | Operations Head > Regional Coordinator > Field Volunteer tree. | `sf org open --path "/lightning/setup/Roles/home"` |
+| **9a** | Sec 7 | Permission Sets List | `ReliefGrid_Coordinator` and `ReliefGrid_Field_Volunteer` sets. | `sf org open --path "/lightning/setup/PermSets/home"` |
+| **9b** | Sec 7 | Field Volunteer FLS | Restricted Field-Level Security for volunteer user. | `sf org open --path "/lightning/setup/PermSets/page?address=%2F0PSg800000Gcvww"` |
+| **10** | Sec 7 | Vikram Logged-in View | Read-only enforcement when viewing incident as Vikram Volunteer. | `sf org open --path "/lightning/setup/ManageUsers/home"` |
+| **11a** | Sec 8 | Report 1 | Incidents by Severity and Status summary report. | `sf org open --path "/lightning/r/Report/00Og800000A43HiEAJ/view"` |
+| **11b** | Sec 8 | Report 2 | Volunteer Availability matrix report. | `sf org open --path "/lightning/r/Report/00Og800000A43HlEAJ/view"` |
+| **11c** | Sec 8 | Report 3 | Dispatch Performance grouped report with distances. | `sf org open --path "/lightning/r/Report/00Og800000A43HhEAJ/view"` |
+| **11d** | Sec 8 | Report 4 | Open Resource Requests grouped report with sums. | `sf org open --path "/lightning/r/Report/00Og800000A43HjEAJ/view"` |
+| **11e** | Sec 8 | Report 5 | Unattended Critical Incidents report with Hours Open formula. | `sf org open --path "/lightning/r/Report/00Og800000A43HkEAJ/view"` |
+| **12** | Sec 8 | Command Center Dashboard | 5-component Lightning Dashboard with Donut, Bar, Metric, and Tables. | `sf org open --path "/lightning/r/Dashboard/01Zg8000004mUHdEAM/view"` |
+| **13a** | Sec 9 | Apex Classes List | All 7 custom Apex classes in Setup showing code coverage %. | `sf org open --path "/lightning/setup/ApexClasses/home"` |
+| **13b** | Sec 9 | Apex Trigger | `IncidentTrigger` in Setup / Developer Console. | `sf org open --path "/lightning/setup/ApexTriggers/home"` |
+| **14a** | Sec 9 | Apex Jobs Monitor | Completed asynchronous Queueable and Batch job executions. | `sf org open --path "/lightning/setup/AsyncApexJobs/home"` |
+| **14b** | Sec 9 | Dispatches Related List | Incident related list showing automatic dispatches with distances in km. | `sf org open --path "/lightning/r/Incident__c/a06g800000AqlMrAAJ/related/Dispatches__r/view"` |
+| **15** | Sec 9 | Scheduled Jobs | `ReliefGrid Escalation Hourly` job waiting in CronTrigger queue. | `sf org open --path "/lightning/setup/CronTrigger/home"` |
+| **16** | Sec 11 | Live Relief Map Tab | Standalone LWC map showing Bangalore pins with refresh action. | `sf org open --path "/lightning/n/Relief_Map"` |
+| **17** | Sec 12 | Apex Test Execution History | Apex Test Queue showing 100% test pass rate across all 8 tests. | `sf org open --path "/lightning/setup/ApexTestQueue/home"` |
+| **18** | Sec 12 | Code Coverage Breakdown | 97% overall org code coverage in Apex Classes Setup table. | `sf org open --path "/lightning/setup/ApexClasses/home"` |
+| **19** | Sec 12 | Developer Console Highlight | Developer Console showing green highlighted covered lines in `DispatchService`. | `sf org open --path "/_ui/common/apex/debug/ApexCSIPage"` |
+| **20** | Bonus | ReliefGrid Home Page | Complete Command Home Page with Live Map, Critical Incidents, and Dashboard. | `sf org open --path "/lightning/page/home"` |
 
 ---
 
-## 5. Verification Checklist for Deliverability (Browser Check)
+## 5. Report Writing Outline & Viva Presentation Guide
 
-If you have not already enabled email deliverability, check it once in the browser:
+### 5.1 Report Outline (Section 15.1 Mappings)
+
+1. **Title Page:** Project title (*ReliefGrid: Disaster Relief & Volunteer Dispatch Platform*), Student Name (*Prajwal*), Roll Number, Course, Date.
+2. **Problem Statement & Objectives:** Disaster response operations require real-time, location-aware matching of skilled volunteers to critical incidents while avoiding double-booking and governor limit exhaustion.
+3. **Requirement Mapping:** Map every spec feature from Section 0 (Data model, Flows, Queues, Roles, Permissions, Trigger, Queueable, Batch, Schedule, LWC).
+4. **System Architecture & ERD:**
+   - Five-step workflow: Incident Logged -> Intake Flow (Queue routing) -> Trigger -> Queueable (`DISTANCE` SOQL) -> Dispatch creation -> Release on Resolution -> Hourly Batch Escalation.
+   - Insert Screenshot #3 (Schema Builder).
+5. **Admin Implementation:**
+   - 6 Validation Rules (Insert Screenshot #5a & #5b).
+   - 2 Queues (`Critical_Response_Queue`, `General_Response_Queue`).
+   - 3 Record-Triggered Flows (Insert Screenshots #6b, #6c, #6d).
+   - Role Hierarchy & FLS Security (Insert Screenshots #8, #9a, #9b, #10).
+   - 5 Reports & 1 Command Center Dashboard (Insert Screenshots #11a-e, #12).
+6. **Development Implementation:**
+   - Geolocation SOQL with `DISTANCE(Current_Location__c, GEOLOCATION(:lat, :lon), 'km')`.
+   - Asynchronous Queueable Apex (`DispatchAssignmentJob`) architecture and SOQL governor limit mitigation.
+   - Batch & Schedulable Apex (`IncidentEscalationBatch`) with hourly cron.
+   - Lightning Web Component (`reliefMap`) with Lightning Map integration.
+7. **Testing & Quality Assurance:**
+   - Test execution results table (8 tests, 100% pass rate).
+   - Per-class coverage table (Org Wide: 97%).
+   - Insert Screenshots #17, #18, #19.
+8. **End-to-End Demo Script:** Walk through Section 13 demo steps (a through f) with corresponding output logs.
+9. **Challenges & Key Learnings:**
+   - *Governor Limits in Triggers:* Why distance calculations and volunteer matching must run asynchronously in Queueable Apex.
+   - *Double-Booking Prevention:* Maintaining in-memory `used` volunteer sets across concurrent incidents.
+   - *Apex Decimal vs Double Handling:* SObject geolocation fields return `Decimal`, requiring proper signature resolution in distance calculations.
+10. **Conclusion & Future Scope:** Mobile volunteer app with GPS tracking, SMS integration via Twilio/Experience Cloud, offline support.
+11. **Appendix:** Verbatim source code for Apex classes, triggers, and LWC.
+
+---
+
+### 5.2 Key Points to Stress During Viva / Evaluation
+
+- **Location-Based SOQL:** Uses Salesforce's native `DISTANCE()` and `GEOLOCATION()` functions in SOQL queries to filter volunteers within `SEARCH_RADIUS_KM` (50 km) and sort by proximity at the database layer.
+- **Asynchronous Design:** Trigger enqueues a Queueable job rather than running queries synchronously. This protects transaction time, avoids the 100-query governor limit, and allows self-chaining if query limits approach thresholds.
+- **Priority-First Allocation:** Incidents are queried ordered by `Priority_Score__c DESC` so critical emergencies secure scarce volunteers first.
+- **Double-Booking Guard:** A `Set<Id> used` keeps track of volunteers allocated in the current execution context so no single volunteer is assigned to multiple active incidents simultaneously.
+- **Least-Privilege Security:** Field Volunteers cannot modify incident records or delete data, and can only edit their own location and dispatch status via custom permission sets and sharing settings.
+
+---
+
+## 6. Deliverability Check
+
+Verify email deliverability in Setup so all Flow emails (Flow 2 & Flow 3) dispatch cleanly:
 ```powershell
 sf org open --path "/lightning/setup/OrgEmailSettings/home"
 ```
-Ensure **Access level** is set to **All email** so Flow email alerts are dispatched properly.
-
----
-
-## 6. ReliefGrid Home Page (Live Map + Critical Open Incidents + Embedded Dashboard)
-
-A dedicated, comprehensive Home Page (`ReliefGrid_Home`) was created and wired into the `ReliefGrid` Lightning Application as its primary landing view (`standard-home` tab).
-
-### Layout Configuration
-- **Template:** `home:desktopTemplate` (Type: `HomePage`)
-- **Top Region:** `c:reliefMap` (Live Interactive Map displaying active incident and volunteer pins with refresh action)
-- **Sidebar Region:** `flexipage:filterListCard` (Displaying the `Critical_Open_Incidents` filtered list view on `Incident__c`)
-- **Bottom Left Region:** `desktopDashboards:embeddedDashboard` (Embedded `ReliefGrid Command Center` dashboard)
-- **App Navigation:** `standard-home` positioned as the 1st tab in `Reliefgrid.app-meta.xml` with `Tab` action override to `ReliefGrid_Home`.
-
-### Command to View the Home Page
-Run this command to open the Home page directly in your browser:
-```powershell
-sf org open --path "/lightning/page/home"
-```
-*(Ensure "ReliefGrid" is selected in the App Launcher if opening for the first time).*
-
-### Screenshot to Capture
-- **Home Page with Address Bar Visible:**
-  Capture the Home page showing:
-  1. The live Relief Map in the top region with active incident pin (`INC-0003`) and volunteer pins.
-  2. The Critical Open Incidents list card in the sidebar showing `INC-0003`.
-  3. The embedded Command Center dashboard below the map.
-  4. The browser address bar showing the org URL (`/lightning/page/home`).
-
+Ensure **Access level** is set to **All email**.
